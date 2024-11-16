@@ -1,42 +1,117 @@
-project link:- https://docs.google.com/document/d/1IbWwf1i-nK9s7pNaJG3Iks78DoIAJ9EMTmlyqknVQcQ/edit?tab=t.0
+## Project Overview
 
-Tech Stack Used:-
+AltiusHub is a backend application designed to manage invoices. It provides a set of RESTful APIs to create, update, delete, retrieve, and list invoices. Each invoice can have multiple items and bill sundries associated with it.
+
+## Features
+
+- Create, update, delete, retrieve, and list invoices.
+- Validate invoice items and bill sundries.
+- Ensure total amount calculations are accurate.
+- Auto-incrementing invoice numbers.
+- Error handling for validation failures.
+
+## Technologies Used
+
 - Node.js
-- Postgres
-- Sequelize
-- Javascript
+- Express.js
+- Sequelize (PostgreSQL)
+- dotenv
+- uuid
+- bcryptjs
+- jsonwebtoken
+- cors
+- body-parser
 
-The project asks us to create three tables 
-1. Invoice
-2. InvoiceItem
-3. Inovice BillSundry
+## Getting Started
 
-I have created three schemas for these table on `/backend/model` folder.
-- `header.model.js` contains model for *Invoice* Table
-- `items.model.js` contains model for *InvoiceItem* Table
-- `billsundry.model.js` contains model for *Invoice BillSundry* Table
+### Prerequisites
 
-each table contains all the columns asked in the assignment.
+- Node.js
+- PostgreSQL
 
-Nextly I created the controllers for invoice which performs the following operation
-- list all invoices
-- create new invoices
-- create new items
-- create new billsundry
-- update item
-- delete item
-- update bill sundry
-- delete bill sundry
+### Installation
 
-I have also applied the following validation on the program
-- Validations for InvoiceItems:
-  - `Amount = Quantity x Price`
-  - `Price, Quantity, and Amount must be greater than zero.`
-  
-- Validations for BillSundrys:
-  - `The amount can be negative or positive.`
-  
-- Validations for Invoice:
-  - `TotalAmount = Sum(InvoiceItems’s Amount) + Sum(InvoiceBillSundry’s Amount)`
-  - InvoiceNumber should autoincremental and hence should be unique.
-  - Raise appropriate error messages if any validation fails.
+1. Clone the repository:
+  ```sh
+  git clone https://github.com/anmolrajsoni15/AltiusHub-Assignment.git
+  ```
+2. Navigate to the project directory:
+  ```sh
+  cd backend
+  ```
+3. Install dependencies:
+  ```sh
+  npm install
+  ```
+4. Create a `.env` file in the root directory and add your database configuration:
+  ```env
+  PORT=4100
+  DB_NAME=altiusHub
+  DB_USER=your_db_user
+  DB_PASS=your_db_password
+  DB_HOST=your_db_host
+  DB_PORT=your_db_port
+  ```
+
+### Running the Application
+
+Start the server:
+```sh
+npm start
+```
+
+For development mode with hot reloading:
+```sh
+npm run dev
+```
+
+The server will be running on the port specified in your `.env` file.
+
+## API Endpoints
+
+### Invoices
+
+- `POST /api/invoices`: Create a new invoice.
+- `PUT /api/invoices/:id`: Update an existing invoice.
+- `DELETE /api/invoices/:id`: Delete an invoice.
+- `GET /api/invoices/:id`: Retrieve a specific invoice.
+- `GET /api/invoices`: List all invoices.
+
+## Database Models
+
+### Header
+
+- `id`: UUID
+- `date`: string (UTC)
+- `invoiceNumber`: number (auto-increment)
+- `customerName`: string
+- `billingAddress`: string
+- `shippingAddress`: string
+- `gstin`: string
+- `totalAmount`: decimal
+
+### Items
+
+- `id`: UUID
+- `itemName`: string
+- `quantity`: decimal
+- `price`: decimal
+- `amount`: decimal
+
+### BillSundry
+
+- `id`: UUID
+- `billSundryName`: string
+- `amount`: decimal
+
+## Validation Rules
+
+- **Invoice Items**:
+  - Amount = Quantity x Price
+  - Price, Quantity, and Amount must be greater than zero.
+- **Bill Sundries**:
+  - Amount can be negative or positive.
+- **Invoice**:
+  - TotalAmount = Sum(InvoiceItems’ Amount) + Sum(InvoiceBillSundry’s Amount)
+  - InvoiceNumber should be auto-incremental and unique.
+
