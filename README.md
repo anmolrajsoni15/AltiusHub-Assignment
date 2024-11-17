@@ -17,9 +17,6 @@ AltiusHub is a backend application designed to manage invoices. It provides a se
 - Sequelize (PostgreSQL)
 - dotenv
 - uuid
-- bcryptjs
-- jsonwebtoken
-- cors
 - body-parser
 
 ## Getting Started
